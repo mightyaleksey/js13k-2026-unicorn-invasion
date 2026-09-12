@@ -77,7 +77,7 @@ export class GamePlayState extends BaseState {
     ])
 
     // todo: fix
-    setTimeout(playMusic, 500)
+    playMusic()
   }
 
   render () {
