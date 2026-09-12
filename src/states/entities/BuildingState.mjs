@@ -8,7 +8,6 @@ import {
 } from '../../constants.mjs'
 import { Dimentions, setColor, shape } from '../../engine.mjs'
 import { desaturate } from '../../libs/color.mjs'
-import { TransitionStatus } from '../../statuses/TransitionStatus.mjs'
 import type { CameraState } from '../elements/CameraState.mjs'
 import { ObstacleState } from './archetypes/ObstacleState.mjs'
 
@@ -31,6 +30,8 @@ export class BuildingState extends ObstacleState {
   gloominess: number
   palette: ReadonlyArray<string>
 
+  isChanging: boolean
+
   constructor (props: BuildingProps) {
     super([
       props[1] === 0
@@ -45,10 +46,20 @@ export class BuildingState extends ObstacleState {
     this.level = props[2] ?? 0
     this.gloominess = getGloominess(this.level)
     this.palette = this.genPalette()
+
+    this.isChanging = false
   }
 
   render () {
     this.renderOne()
+  }
+
+  update (delta: number) {
+    super.update(delta)
+
+    if (this.isChanging) {
+      this.palette = this.genPalette()
+    }
   }
 
   renderOne () {
@@ -120,14 +131,13 @@ export class BuildingState extends ObstacleState {
 
   setGloominess (level: number) {
     // level = [0, 6]
-    this.statuses.push(
-      new TransitionStatus([
-        this.gloominess,
-        getGloominess(level),
-        TRANSITION_DURATION,
-        updateGlominess
-      ])
-    )
+    this.isChanging = true
+    this.setTransition(TRANSITION_DURATION, {
+      gloominess: getGloominess(level)
+    })
+    this.setTransitionEnd(() => {
+      this.isChanging = false
+    })
   }
 }
 

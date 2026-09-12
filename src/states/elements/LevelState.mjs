@@ -16,13 +16,13 @@ import { BossState } from '../entities/BossState.mjs'
 import { BuildingState } from '../entities/BuildingState.mjs'
 import { MinionState } from '../entities/MinionState.mjs'
 import type { EntitiesState } from './EntitiesState.mjs'
-import { StatusState } from './StatusState.mjs'
+import { TransitionState } from './TransitionState.mjs'
 
 export type LevelProps = Readonly<
   [camera: CameraState, entities: EntitiesState]
 >
 
-export class LevelState extends StatusState {
+export class LevelState extends TransitionState {
   camera: CameraState
   entities: EntitiesState
 

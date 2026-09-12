@@ -10,7 +10,7 @@ import { nullthrows } from '../../libs/nullthrows.mjs'
 import { Animation } from '../Animation.mjs'
 import type { CameraState } from '../elements/CameraState.mjs'
 import type { EntitiesState } from '../elements/EntitiesState.mjs'
-import { StatusState } from '../elements/StatusState.mjs'
+import { TransitionState } from '../elements/TransitionState.mjs'
 import { StateMachine } from '../StateMachine.mjs'
 
 // [ x, y, width, height, dx, dy ]
@@ -25,7 +25,7 @@ export type EntityProps = Readonly<
   ]
 >
 
-export class EntityState<T = unknown> extends StatusState {
+export class EntityState<T = unknown> extends TransitionState {
   x: number
   y: number
   width: number
@@ -45,6 +45,7 @@ export class EntityState<T = unknown> extends StatusState {
   hpMax: number
 
   state: StateMachine<T>
+  statuses: Array<any>
 
   isCollidable: boolean
   isDestroyed: boolean
@@ -83,6 +84,7 @@ export class EntityState<T = unknown> extends StatusState {
     this.hpMax = 0
 
     this.state = new StateMachine({})
+    this.statuses = []
 
     this.isCollidable = true
     this.isDestroyed = false
@@ -107,6 +109,14 @@ export class EntityState<T = unknown> extends StatusState {
   update (delta: number) {
     if (this.isVisible) super.update(delta)
     this.state.update(delta)
+
+    if (this.statuses.length > 0) {
+      for (let j = this.statuses.length - 1; j > -1; --j) {
+        const status = this.statuses[j]
+        status.update(this, delta)
+        if (status.isExpired) this.statuses.splice(j, 1)
+      }
+    }
 
     if (this.currentAnimation != null) {
       this.currentAnimation.update(delta)
