@@ -6,6 +6,7 @@ import { gameState } from './gameState.mjs'
 import { gameTiles } from './gameTiles.mjs'
 import { initSoundBank } from './sound.mjs'
 import { GamePlayState } from './states/game/GamePlayState.mjs'
+import { GameTitleState } from './states/game/GameTitleState.mjs'
 import { StateMachine } from './states/StateMachine.mjs'
 
 async function initGame () {
@@ -77,9 +78,14 @@ async function initGame () {
   // reset global game state
   gameState.stack = []
   // sets all the screens
-  gameState.push(new StateMachine({ play: () => new GamePlayState() }))
+  gameState.push(
+    new StateMachine({
+      play: () => new GamePlayState(),
+      title: () => new GameTitleState()
+    })
+  )
   // $FlowFixMe[prop-missing]
-  gameState.stack[0]?.change('play')
+  gameState.stack[0]?.change('title')
 
   await initSoundBank()
 }

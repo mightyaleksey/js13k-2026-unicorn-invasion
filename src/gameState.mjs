@@ -18,6 +18,11 @@ export const gameState: StateStack = new StateStack()
  * Helpers
  */
 
+export function changeState (stateName: string) {
+  // $FlowFixMe[prop-missing]
+  gameState.stack[0].change(stateName)
+}
+
 export function getLevel (): number {
   // $FlowFixMe[prop-missing]
   return gameState.stack[0].current.level.level

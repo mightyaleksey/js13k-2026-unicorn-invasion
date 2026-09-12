@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Воронка из дуг</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #050505; }
+    canvas { display: block; width: 100vw; height: 100vh; background: #050505; }
+  </style>
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <script>
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+
+    const RAYS = 240;
+    const TWIST = 0.32; // сила закрутки: больше — круче дуги
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      draw();
+    }
+
+    function pointsOnBorder(count) {
+      const w = canvas.width;
+      const h = canvas.height;
+      const peri = 2 * (w + h);
+      const pts = [];
+
+      for (let i = 0; i < count; i++) {
+        let d = (i / count) * peri;
+        if (d < w) pts.push({ x: d, y: 0 });
+        else if (d < w + h) pts.push({ x: w, y: d - w });
+        else if (d < 2 * w + h) pts.push({ x: w - (d - w - h), y: h });
+        else pts.push({ x: 0, y: h - (d - 2 * w - h) });
+      }
+      return pts;
+    }
+
+    function draw() {
+      const w = canvas.width;
+      const h = canvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
+      const hole = Math.min(w, h) * 0.02;
+
+      ctx.fillStyle = '#050505';
+      ctx.fillRect(0, 0, w, h);
+
+      const rays = pointsOnBorder(RAYS);
+
+      rays.forEach((p, i) => {
+        const dx = cx - p.x;
+        const dy = cy - p.y;
+        const len = Math.hypot(dx, dy) || 1;
+        const nx = dx / len;
+        const ny = dy / len;
+
+        const x2 = cx - nx * hole;
+        const y2 = cy - ny * hole;
+
+        // перпендикуляр к направлению на центр — дуга закручивается в одну сторону
+        const midX = (p.x + x2) * 0.5;
+        const midY = (p.y + y2) * 0.5;
+        const ctrlX = midX - ny * len * TWIST;
+        const ctrlY = midY + nx * len * TWIST;
+
+        const g = ctx.createLinearGradient(p.x, p.y, x2, y2);
+        g.addColorStop(0, 'rgba(120, 190, 255, 0.04)');
+        g.addColorStop(0.5, 'rgba(90, 170, 255, 0.16)');
+        g.addColorStop(1, 'rgba(200, 235, 255, 0.9)');
+
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.quadraticCurveTo(ctrlX, ctrlY, x2, y2);
+        ctx.strokeStyle = g;
+        ctx.lineWidth = i % 8 === 0 ? 1.7 : 0.7;
+        ctx.stroke();
+      });
+
+      const vg = ctx.createRadialGradient(cx, cy, 0, cx, cy, hole * 7);
+      vg.addColorStop(0, '#000');
+      vg.addColorStop(0.4, 'rgba(0,0,0,0.88)');
+      vg.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = vg;
+      ctx.beginPath();
+      ctx.arc(cx, cy, hole * 7, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+  </script>
+</body>
+</html>
