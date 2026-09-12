@@ -11,8 +11,8 @@ import {
 } from '../../engine.mjs'
 import { changeState } from '../../gameState.mjs'
 import { formatLines } from '../../helpers/text.mjs'
-import { BookState } from '../elements/BookState.mjs'
 import { TransitionState } from '../elements/TransitionState.mjs'
+import { BookState } from '../entities/BookState.mjs'
 
 // The fallen skies tell a story.
 // The gates of Hell were thrown wide.
@@ -97,9 +97,6 @@ export class GameTitleState extends TransitionState {
 
   updateProps () {
     const props = this.genProps()
-    this.book.x = props[0]
-    this.book.y = props[1]
-    this.book.width = props[2]
-    this.book.height = props[3]
+    this.book.updateBox(props)
   }
 }

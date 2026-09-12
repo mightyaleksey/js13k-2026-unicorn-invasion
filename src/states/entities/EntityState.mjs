@@ -13,6 +13,8 @@ import type { EntitiesState } from '../elements/EntitiesState.mjs'
 import { TransitionState } from '../elements/TransitionState.mjs'
 import { StateMachine } from '../StateMachine.mjs'
 
+const propNames = ['x', 'y', 'width', 'height', 'dx', 'dy']
+
 // [ x, y, width, height, dx, dy ]
 export type EntityProps = Readonly<
   [
@@ -165,6 +167,13 @@ export class EntityState<T = unknown> extends TransitionState {
 
   genAnimations (def: CharType): ReadonlyArray<Animation> {
     return def.frames.map((frames) => new Animation(frames, def.frameInterval))
+  }
+
+  updateBox (props: EntityProps) {
+    for (let i = 0; i < props.length; ++i) {
+      // $FlowExpectedError[prop-missing]
+      if (props[i] != null) this[propNames[i]] = props[i]
+    }
   }
 
   onCollide (target: EntityState<>, self: EntityState<>, delta: number) {

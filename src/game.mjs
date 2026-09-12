@@ -85,7 +85,7 @@ async function initGame () {
     })
   )
   // $FlowFixMe[prop-missing]
-  gameState.stack[0]?.change('play')
+  gameState.stack[0]?.change('title')
 
   await initSoundBank()
 }

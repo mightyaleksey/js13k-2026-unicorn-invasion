@@ -10,8 +10,9 @@ import {
 } from '../../engine.mjs'
 import { formatLines } from '../../helpers/text.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
+import { TransitionState } from '../elements/TransitionState.mjs'
 import { ButtonState } from './ButtonState.mjs'
-import { TransitionState } from './TransitionState.mjs'
+import { EntityState } from './EntityState.mjs'
 
 export type BookProps = Readonly<
   [
@@ -24,7 +25,7 @@ export type BookProps = Readonly<
   ]
 >
 
-export class BookState extends TransitionState {
+export class BookState extends EntityState {
   x: number
   y: number
   width: number
@@ -38,12 +39,7 @@ export class BookState extends TransitionState {
   button: ButtonState
 
   constructor (props: BookProps) {
-    super()
-
-    this.x = props[0]
-    this.y = props[1]
-    this.width = props[2]
-    this.height = props[3]
+    super([props[0], props[1], props[2], props[3]])
 
     this.source = props[4]
     this.pages = null
