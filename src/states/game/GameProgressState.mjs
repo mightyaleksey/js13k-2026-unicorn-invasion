@@ -2,7 +2,7 @@
 
 import { FONT_MEDIUM } from '../../constants.mjs'
 import { Dimentions, printf, rect, setColor, setFont } from '../../engine.mjs'
-import { gameState, getLevel, nextlevel } from '../../gameState.mjs'
+import { gameState, nextlevel, progress } from '../../gameState.mjs'
 import { RainbowState } from '../elements/RainbowState.mjs'
 import { TransitionState } from '../elements/TransitionState.mjs'
 
@@ -22,7 +22,7 @@ export class GameProgressState extends TransitionState {
   enter (input: unknown) {
     this.x = 200
     this.y = 100
-    this.level = getLevel()
+    this.level = progress.level
 
     this.bgOpacity = 0
     this.rainbowOpacity = 0
@@ -36,6 +36,7 @@ export class GameProgressState extends TransitionState {
     this.setTransition(1, { textOpacity: 1 })
     this.setTransition(1, {}) // artificial delay
     this.setTransition(0.3, { bgOpacity: 0 })
+    this.setTransition(0.3, {})
     this.setTransitionEnd(() => {
       gameState.pop()
       nextlevel()

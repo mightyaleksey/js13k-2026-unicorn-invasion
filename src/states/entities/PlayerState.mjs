@@ -2,8 +2,10 @@
 
 import { FRAMES, TILE_SIZE } from '../../constants.mjs'
 import { Dimentions, Touch } from '../../engine.mjs'
+import { gameState } from '../../gameState.mjs'
 import { clamp } from '../../libs/clamp.mjs'
 import { FrontShootingStatus } from '../../statuses/FrontShootingStatus.mjs'
+import { GameOverState } from '../game/GameOverState.mjs'
 import { StateMachine } from '../StateMachine.mjs'
 import { CharacterState } from './archetypes/CharacterState.mjs'
 import { PlayerIdleState } from './characters/PlayerIdleState.mjs'
@@ -21,7 +23,7 @@ export class PlayerState extends CharacterState<'idle' | 'walk'> {
     this.animations = this.genAnimations(FRAMES.player)
     this.currentAnimation = this.animations[0]
 
-    this.hp = 3
+    this.hp = 1
     this.hpMax = 3
     this.scores = 0
 
@@ -60,5 +62,9 @@ export class PlayerState extends CharacterState<'idle' | 'walk'> {
     if (m < TILE_SIZE) return null
 
     return [dx / m, dy / m, m]
+  }
+
+  onDeath () {
+    gameState.push(new GameOverState())
   }
 }

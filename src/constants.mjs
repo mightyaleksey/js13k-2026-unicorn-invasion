@@ -37,6 +37,10 @@ export const TRANSITION_DURATION = 0.3
 
 // array index reflects corresponding direction, i.e. top, right, bottom, left
 export const MOVEMENT_KEYS: ReadonlyArray<string> = [
+  'ArrowUp',
+  'ArrowRight',
+  'ArrowDown',
+  'ArrowLeft',
   'w',
   'd',
   's',
@@ -85,4 +89,4 @@ export const RAINBOW_PALETTE: ReadonlyArray<string> = [
 export const DEBUG_BB: boolean = false
 export const DEBUG_PANEL: boolean = false
 export const DEBUG_BOSS_ONLY: boolean = false
-export const NO_SOUND: boolean = false
+export const NO_SOUND: boolean = true

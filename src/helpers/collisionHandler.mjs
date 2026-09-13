@@ -22,7 +22,7 @@ export function collisionHandler (
 ) {
   if (self instanceof CharacterState) {
     if (target instanceof CrystalState) {
-      progress.scores += 100
+      progress.scores += 20
       gameState.push(new GameProgressState())
       // display progress, move to next level
       target.isDestroyed = true

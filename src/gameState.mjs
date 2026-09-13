@@ -25,12 +25,12 @@ export function changeState (stateName: string) {
   gameState.stack[0].change(stateName)
 }
 
-export function getLevel (): number {
-  // $FlowFixMe[prop-missing]
-  return gameState.stack[0].current.level.level
-}
-
 export function nextlevel () {
   // $FlowFixMe[prop-missing]
   gameState.stack[0].current.nextLevel()
+}
+
+export function restart () {
+  // $FlowFixMe[prop-missing]
+  gameState.stack[0].current.restart()
 }

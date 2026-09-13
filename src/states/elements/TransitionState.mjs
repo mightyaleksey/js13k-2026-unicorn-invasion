@@ -79,6 +79,13 @@ export class TransitionState extends BaseState {
     })
   }
 
+  resetTransition () {
+    this.tEnd = null
+    this.tProps = null
+    this.tQueue = []
+    this.tTime = 0
+  }
+
   setTransition (
     duration: number,
     props: { [string]: number },
