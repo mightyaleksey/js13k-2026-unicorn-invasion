@@ -33,6 +33,8 @@ export class BossState extends CharacterState<> {
       ConeShootingStatus,
       ExplosionShootingStatus
     ]
+
+    this.isCollidable = false
   }
 
   render () {
@@ -54,12 +56,14 @@ export class BossState extends CharacterState<> {
     const targetY = viewport.y + 0.3 * viewport.height
     if (targetY < this.y) {
       this.camera.isMoving = false
+      this.isCollidable = true
     }
   }
 
   /* helpers */
 
   switchAttacks () {
+    if (!this.isCollidable) return
     if (this.statuses.length === 0) {
       this.sequenceIndex = (this.sequenceIndex + 1) % this.sequence.length
       const S = this.sequence[this.sequenceIndex]
