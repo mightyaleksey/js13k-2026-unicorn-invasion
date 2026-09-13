@@ -15,7 +15,7 @@ const monochrome = [
   '#494949'
 ]
 
-export type RainbowProps = Readonly<[level?: number, small: boolean]>
+export type RainbowProps = Readonly<[level?: number, small?: boolean]>
 
 export class RainbowState extends BaseState {
   level: number

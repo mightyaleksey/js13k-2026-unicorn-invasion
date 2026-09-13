@@ -95,7 +95,7 @@ export class BookState extends EntityState {
     const maxLines = Math.floor(h / 16)
     const pages = []
 
-    this.source.map((lines) => {
+    this.source.forEach((lines) => {
       const currentLines = formatLines(lines, w)
 
       let index = 0

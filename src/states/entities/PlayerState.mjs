@@ -12,6 +12,7 @@ import type { EntityProps } from './EntityState.mjs'
 
 export class PlayerState extends CharacterState<'idle' | 'walk'> {
   scores: number
+  musicStarted: boolean
   touchEnabled: boolean
 
   constructor (props: EntityProps) {
@@ -30,6 +31,7 @@ export class PlayerState extends CharacterState<'idle' | 'walk'> {
     }).change('idle')
 
     this.statuses.push(new FrontShootingStatus([0.4, 0, -90]))
+    this.musicStarted = false
     this.touchEnabled = false
   }
 

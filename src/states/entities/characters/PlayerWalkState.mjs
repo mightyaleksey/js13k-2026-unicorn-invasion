@@ -7,6 +7,7 @@ import {
   UNIT_VECTORS
 } from '../../../constants.mjs'
 import { Dimentions, Keys } from '../../../engine.mjs'
+import { playMusic } from '../../../sound.mjs'
 import type { PlayerState } from '../PlayerState.mjs'
 import { PlayerIdleState } from './PlayerIdleState.mjs'
 
@@ -22,6 +23,11 @@ export class PlayerWalkState extends PlayerIdleState<PlayerState> {
     const entity = this.entity
     const direction = MOVEMENT_KEYS.findIndex((key) => Keys.wasHolding(key)) % 4
     const touch = entity.getTouchOffset()
+
+    if (!entity.musicStarted) {
+      playMusic()
+      entity.musicStarted = true
+    }
 
     const centerY = 0.5 * Dimentions.height + entity.camera.y
     const cameraVelocity =

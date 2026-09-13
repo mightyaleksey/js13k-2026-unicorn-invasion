@@ -17,7 +17,6 @@ import {
 } from '../../engine.mjs'
 import { gameState, progress } from '../../gameState.mjs'
 import { inCubic, outCubic } from '../../libs/easing.mjs'
-import { playMusic } from '../../sound.mjs'
 import { Console } from '../../ui/Console.mjs'
 import { BaseState } from '../BaseState.mjs'
 import { CameraState } from '../elements/CameraState.mjs'
@@ -93,9 +92,6 @@ export class GamePlayState extends TransitionState {
     this.showTitle(() => {
       this.showLevel()
     })
-
-    // todo: fix
-    playMusic()
   }
 
   render () {
@@ -111,7 +107,10 @@ export class GamePlayState extends TransitionState {
       setFont(FONT_HUGE)
 
       for (let i = 0; i < title.length; ++i) {
-        setColor(RAINBOW_PALETTE[i % RAINBOW_PALETTE.length], this.eNameOpacity)
+        setColor(
+          RAINBOW_PALETTE[i % RAINBOW_PALETTE.length],
+          this.eTitleOpacity
+        )
         printf(
           title[i].padStart(i + 1, ' ').padEnd(title.length, ' '),
           0,
