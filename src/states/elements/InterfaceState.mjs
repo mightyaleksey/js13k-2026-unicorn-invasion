@@ -2,6 +2,7 @@
 
 import { FONT_SMALL, TILE_SIZE } from '../../constants.mjs'
 import { Dimentions, printf, rect, setColor, setFont } from '../../engine.mjs'
+import { progress } from '../../gameState.mjs'
 import { BaseState } from '../BaseState.mjs'
 import type { PlayerState } from '../entities/PlayerState.mjs'
 
@@ -28,11 +29,10 @@ export class InterfaceState extends BaseState {
     rect('line', barX, barY, barSize, 4)
     rect('fill', barX, barY, Math.max((barSize * hp) / hpMax, 1), 4)
 
-    const scores = 0
     setColor('#fff')
     setFont(FONT_SMALL)
     printf(
-      String(scores).padStart(6, '0'),
+      String(progress.scores).padStart(6, '0'),
       0.5 * Dimentions.width,
       TILE_SIZE - 6,
       0.5 * Dimentions.width - TILE_SIZE,

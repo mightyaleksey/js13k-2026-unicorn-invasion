@@ -7,6 +7,7 @@ import {
   TILE_SIZE
 } from '../../constants.mjs'
 import { Dimentions } from '../../engine.mjs'
+import { progress } from '../../gameState.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
 import { random, shuffle } from '../../libs/random.mjs'
 import { range } from '../../libs/range.mjs'
@@ -31,7 +32,6 @@ export class LevelState extends TransitionState {
 
   positions: Array<number>
   stages: Array<[interval: number, count: number]>
-  level: number
 
   constructor (props: LevelProps) {
     super()
@@ -44,7 +44,6 @@ export class LevelState extends TransitionState {
 
     this.positions = [0]
     this.stages = this.genStages()
-    this.level = 0
   }
 
   enter () {
@@ -52,7 +51,11 @@ export class LevelState extends TransitionState {
     const sample = [0, 1]
     sample.forEach((pointer) => {
       sample.forEach((multiplier) => {
-        const building = new BuildingState([this.camera, pointer, this.level])
+        const building = new BuildingState([
+          this.camera,
+          pointer,
+          progress.level
+        ])
         building.y +=
           (FREE_AREA * TILE_SIZE + building.height) * (multiplier + 1)
 
@@ -109,10 +112,10 @@ export class LevelState extends TransitionState {
   }
 
   levelUp () {
-    this.level++
+    progress.level++
     this.entities.list.forEach((entity) => {
       if (entity instanceof BuildingState) {
-        entity.setGloominess(this.level)
+        entity.setGloominess(progress.level)
       }
     })
 
@@ -121,7 +124,7 @@ export class LevelState extends TransitionState {
 
   onInterval (pointer: number) {
     if (pointer === 0 || pointer === 1) {
-      const building = new BuildingState([this.camera, pointer, this.level])
+      const building = new BuildingState([this.camera, pointer, progress.level])
       const wall = new WallState([this.camera, pointer])
       this.entities.append(building)
       this.entities.append(wall)

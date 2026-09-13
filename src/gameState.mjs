@@ -14,6 +14,8 @@ import { StateStack } from './states/StateStack.mjs'
  */
 export const gameState: StateStack = new StateStack()
 
+export const progress = { level: 0, scores: 0 }
+
 /**
  * Helpers
  */

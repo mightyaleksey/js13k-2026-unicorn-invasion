@@ -7,7 +7,7 @@ import {
   TILE_SIZE
 } from '../../constants.mjs'
 import { Dimentions, translate } from '../../engine.mjs'
-import { gameState } from '../../gameState.mjs'
+import { gameState, progress } from '../../gameState.mjs'
 import { playMusic } from '../../sound.mjs'
 import { Console } from '../../ui/Console.mjs'
 import { BaseState } from '../BaseState.mjs'
@@ -46,6 +46,10 @@ export class GamePlayState extends BaseState {
   grid: GridState
 
   enter () {
+    // reset
+    progress.level = 0
+    progress.scores = 0
+
     this.camera = new CameraState()
     this.player = new PlayerState([0, -3 * TILE_SIZE])
 
@@ -69,7 +73,7 @@ export class GamePlayState extends BaseState {
     this.level.enter()
 
     gameState.push(new GameStageState(), [
-      this.level.level,
+      progress.level,
       () => {
         gameState.pop()
       }

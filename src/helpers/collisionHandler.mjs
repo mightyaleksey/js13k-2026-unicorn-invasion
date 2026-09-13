@@ -1,9 +1,10 @@
 /* @flow */
 
-import { gameState } from '../gameState.mjs'
+import { gameState, progress } from '../gameState.mjs'
 import { playSound } from '../sound.mjs'
 import { CharacterState } from '../states/entities/archetypes/CharacterState.mjs'
 import { ProjectileState } from '../states/entities/archetypes/ProjectileState.mjs'
+import { BossState } from '../states/entities/BossState.mjs'
 import { CrystalState } from '../states/entities/CrystalState.mjs'
 import type { EntityState } from '../states/entities/EntityState.mjs'
 import { MinionState } from '../states/entities/MinionState.mjs'
@@ -21,6 +22,7 @@ export function collisionHandler (
 ) {
   if (self instanceof CharacterState) {
     if (target instanceof CrystalState) {
+      progress.scores += 100
       gameState.push(new GameProgressState())
       // display progress, move to next level
       target.isDestroyed = true
@@ -29,6 +31,14 @@ export function collisionHandler (
       self.hp -= 1
 
       if (self.hp <= 0) {
+        if (self instanceof MinionState) {
+          progress.scores += 3
+        }
+
+        if (self instanceof BossState) {
+          progress.scores += 12
+        }
+
         self.isDestroyed = true
       } else {
         self.onHit()

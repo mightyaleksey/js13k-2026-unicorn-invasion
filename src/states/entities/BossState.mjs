@@ -38,7 +38,7 @@ export class BossState extends CharacterState<> {
   }
 
   render () {
-    setColor('#fff')
+    setColor('#fff', this.isCollidable ? 1 : 0.8)
     draw(
       gameTiles[nullthrows(this.frameID)],
       this.x,

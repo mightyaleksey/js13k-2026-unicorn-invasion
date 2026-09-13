@@ -1,7 +1,8 @@
 /* @flow */
 
 import { FRAMES, TILE_SIZE } from '../../constants.mjs'
-import { Touch } from '../../engine.mjs'
+import { Dimentions, Touch } from '../../engine.mjs'
+import { clamp } from '../../libs/clamp.mjs'
 import { FrontShootingStatus } from '../../statuses/FrontShootingStatus.mjs'
 import { StateMachine } from '../StateMachine.mjs'
 import { CharacterState } from './archetypes/CharacterState.mjs'
@@ -35,6 +36,13 @@ export class PlayerState extends CharacterState<'idle' | 'walk'> {
   update (delta: number) {
     super.update(delta)
     if (Touch.wasTouched()) this.touchEnabled = true
+
+    // prevent player moving off screen
+    this.y = clamp(
+      this.y,
+      this.camera.y + TILE_SIZE,
+      this.camera.y + Dimentions.height - this.height
+    )
   }
 
   /* helpers */

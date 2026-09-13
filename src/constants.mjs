@@ -10,7 +10,7 @@ export const FREE_AREA: number = 3 // x tiles
 
 // extra multiplier to calculate horizontal camera offset
 export const CAMERA_MX: number = (PLAY_AREA - 1) / PLAY_AREA
-export const CAMERA_SPEED: number = 10
+export const CAMERA_SPEED: number = 40
 
 export const MINION_SPEED: number = 20
 export const PLAYER_SPEED: number = 100
@@ -85,4 +85,4 @@ export const RAINBOW_PALETTE: ReadonlyArray<string> = [
 export const DEBUG_BB: boolean = false
 export const DEBUG_PANEL: boolean = false
 export const DEBUG_BOSS_ONLY: boolean = false
-export const NO_SOUND: boolean = false
+export const NO_SOUND: boolean = true
