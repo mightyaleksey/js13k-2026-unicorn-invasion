@@ -4,10 +4,18 @@ import {
   CAMERA_MX,
   DEBUG_BB,
   DEBUG_PANEL,
+  FONT_HUGE,
   TILE_SIZE
 } from '../../constants.mjs'
-import { Dimentions, translate } from '../../engine.mjs'
+import {
+  Dimentions,
+  printf,
+  setColor,
+  setFont,
+  translate
+} from '../../engine.mjs'
 import { gameState, progress } from '../../gameState.mjs'
+import { inCubic, outCubic } from '../../libs/easing.mjs'
 import { playMusic } from '../../sound.mjs'
 import { Console } from '../../ui/Console.mjs'
 import { BaseState } from '../BaseState.mjs'
@@ -16,9 +24,9 @@ import { EntitiesState } from '../elements/EntitiesState.mjs'
 import { GridState } from '../elements/GridState.mjs'
 import { InterfaceState } from '../elements/InterfaceState.mjs'
 import { LevelState } from '../elements/LevelState.mjs'
+import { TransitionState } from '../elements/TransitionState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
 import { ToastyState } from '../entities/ToastyState.mjs'
-import { GameStageState } from './GameStageState.mjs'
 
 /**
  * Level & Camera logic
@@ -31,7 +39,7 @@ import { GameStageState } from './GameStageState.mjs'
  * |  p  |   - camera { x: 0, y: -h }
  */
 
-export class GamePlayState extends BaseState {
+export class GamePlayState extends TransitionState {
   camera: CameraState
   player: PlayerState
 
@@ -41,6 +49,9 @@ export class GamePlayState extends BaseState {
   toasty: ToastyState
 
   startY: number
+
+  eLevelOpacity: number
+  eLevelY: number
 
   console: Console
   grid: GridState
@@ -61,6 +72,9 @@ export class GamePlayState extends BaseState {
     this.entities.append(this.player)
     this.startY = 0
 
+    this.eLevelOpacity = 0
+    this.eLevelY = -2 * TILE_SIZE
+
     // $FlowExpectedError[constant-condition]
     if (DEBUG_PANEL) {
       this.console = new Console({ x: 8, y: 16 })
@@ -71,13 +85,7 @@ export class GamePlayState extends BaseState {
     }
 
     this.level.enter()
-
-    gameState.push(new GameStageState(), [
-      progress.level,
-      () => {
-        gameState.pop()
-      }
-    ])
+    this.showLevel()
 
     // todo: fix
     playMusic()
@@ -91,6 +99,18 @@ export class GamePlayState extends BaseState {
     this.entities.render()
     // restore camera
     translate(this.camera.x + this.camera.offsetX, this.camera.y)
+
+    if (this.eLevelY > 0) {
+      setColor('#fff', this.eLevelOpacity)
+      setFont(FONT_HUGE)
+      printf(
+        `Level ${progress.level + 1}`,
+        0,
+        this.eLevelY,
+        Dimentions.width,
+        'center'
+      )
+    }
 
     this.interface.render()
     this.toasty.render()
@@ -111,6 +131,7 @@ export class GamePlayState extends BaseState {
   }
 
   update (delta: number) {
+    super.update(delta)
     this.camera.update(delta)
     this.camera.x = CAMERA_MX * (this.player.x + 0.5 * this.player.width)
 
@@ -124,5 +145,25 @@ export class GamePlayState extends BaseState {
   nextLevel () {
     this.level.levelUp()
     this.camera.isMoving = true
+    this.showLevel()
+  }
+
+  showLevel (callback?: () => void) {
+    this.eLevelOpacity = 0
+    this.eLevelY = -2 * TILE_SIZE
+
+    this.setTransition(0.2, {})
+    this.setTransition(
+      0.4,
+      { eLevelOpacity: 1, eLevelY: 0.5 * Dimentions.height },
+      outCubic
+    )
+    this.setTransition(0.2, {})
+    this.setTransition(
+      0.4,
+      { eLevelOpacity: 0, eLevelY: Dimentions.height + 2 * TILE_SIZE },
+      inCubic
+    )
+    this.setTransitionEnd(callback)
   }
 }

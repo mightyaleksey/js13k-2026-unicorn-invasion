@@ -5,7 +5,6 @@ import { Dimentions, printf, rect, setColor, setFont } from '../../engine.mjs'
 import { gameState, getLevel, nextlevel } from '../../gameState.mjs'
 import { RainbowState } from '../elements/RainbowState.mjs'
 import { TransitionState } from '../elements/TransitionState.mjs'
-import { GameStageState } from './GameStageState.mjs'
 
 const colors = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet']
 
@@ -31,21 +30,15 @@ export class GameProgressState extends TransitionState {
 
     this.rainbow = new RainbowState([this.level])
 
-    this.setTransition(1, { bgOpacity: 0.5 })
+    this.setTransition(0.3, { bgOpacity: 0.5 })
     this.setTransition(1, { rainbowOpacity: 1 })
     this.setTransition(1, { level: this.level + 1 })
     this.setTransition(1, { textOpacity: 1 })
     this.setTransition(1, {}) // artificial delay
+    this.setTransition(0.3, { bgOpacity: 0 })
     this.setTransitionEnd(() => {
       gameState.pop()
       nextlevel()
-      gameState.push(new GameStageState(), [
-        getLevel(),
-        () => {
-          // switch level
-          gameState.pop()
-        }
-      ])
     })
   }
 
