@@ -5,6 +5,7 @@ import {
   DEBUG_BB,
   DEBUG_PANEL,
   FONT_HUGE,
+  RAINBOW_PALETTE,
   TILE_SIZE
 } from '../../constants.mjs'
 import {
@@ -27,6 +28,8 @@ import { LevelState } from '../elements/LevelState.mjs'
 import { TransitionState } from '../elements/TransitionState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
 import { ToastyState } from '../entities/ToastyState.mjs'
+
+const title = 'Unicorn Invasion'.split('')
 
 /**
  * Level & Camera logic
@@ -52,6 +55,7 @@ export class GamePlayState extends TransitionState {
 
   eLevelOpacity: number
   eLevelY: number
+  eTitleOpacity: number
 
   console: Console
   grid: GridState
@@ -74,6 +78,7 @@ export class GamePlayState extends TransitionState {
 
     this.eLevelOpacity = 0
     this.eLevelY = -2 * TILE_SIZE
+    this.eTitleOpacity = 0
 
     // $FlowExpectedError[constant-condition]
     if (DEBUG_PANEL) {
@@ -85,7 +90,9 @@ export class GamePlayState extends TransitionState {
     }
 
     this.level.enter()
-    this.showLevel()
+    this.showTitle(() => {
+      this.showLevel()
+    })
 
     // todo: fix
     playMusic()
@@ -99,6 +106,22 @@ export class GamePlayState extends TransitionState {
     this.entities.render()
     // restore camera
     translate(this.camera.x + this.camera.offsetX, this.camera.y)
+
+    if (this.eTitleOpacity > 0) {
+      setFont(FONT_HUGE)
+
+      for (let i = 0; i < title.length; ++i) {
+        setColor(RAINBOW_PALETTE[i % RAINBOW_PALETTE.length], this.eNameOpacity)
+        printf(
+          title[i].padStart(i + 1, ' ').padEnd(title.length, ' '),
+          0,
+          0.5 * Dimentions.height,
+          Dimentions.width,
+          'center'
+        )
+      }
+      // setFont(FONT_HUGE)
+    }
 
     if (this.eLevelY > 0) {
       setColor('#fff', this.eLevelOpacity)
@@ -164,6 +187,16 @@ export class GamePlayState extends TransitionState {
       { eLevelOpacity: 0, eLevelY: Dimentions.height + 2 * TILE_SIZE },
       inCubic
     )
+    this.setTransitionEnd(callback)
+  }
+
+  showTitle (callback?: () => void) {
+    this.eTitleOpacity = 0
+
+    this.setTransition(0.2, {})
+    this.setTransition(0.4, { eTitleOpacity: 1 }, outCubic)
+    this.setTransition(0.4, {})
+    this.setTransition(0.4, { eTitleOpacity: 0 }, inCubic)
     this.setTransitionEnd(callback)
   }
 }
