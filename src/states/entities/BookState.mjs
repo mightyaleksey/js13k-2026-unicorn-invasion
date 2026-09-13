@@ -53,20 +53,23 @@ export class BookState extends EntityState {
   render () {
     if (this.pages == null) return
     const lines = this.pages[this.page]
+    const total = nullthrows(this.pages).length
 
     setFont(FONT_MEDIUM)
     for (let i = 0; i < lines.length; ++i) {
       printf(lines[i], this.x, this.y + 16 * i + 8, this.width)
     }
 
-    setFont(FONT_SMALL)
-    printf(
-      `${this.page + 1}/${nullthrows(this.pages).length}`,
-      this.x,
-      this.y + this.height,
-      this.width,
-      'right'
-    )
+    if (total > 1) {
+      setFont(FONT_SMALL)
+      printf(
+        `${this.page + 1}/${total}`,
+        this.x,
+        this.y + this.height,
+        this.width,
+        'right'
+      )
+    }
   }
 
   update (delta: number) {

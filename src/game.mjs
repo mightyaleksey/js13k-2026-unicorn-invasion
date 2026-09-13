@@ -5,6 +5,7 @@ import { createEngine, genQuads, newImage, scaleQuad } from './engine.mjs'
 import { gameState } from './gameState.mjs'
 import { gameTiles } from './gameTiles.mjs'
 import { initSoundBank } from './sound.mjs'
+import { GameFinalState } from './states/game/GameFinalState.mjs'
 import { GamePlayState } from './states/game/GamePlayState.mjs'
 import { GameTitleState } from './states/game/GameTitleState.mjs'
 import { StateMachine } from './states/StateMachine.mjs'
@@ -39,12 +40,13 @@ async function initGame () {
   // sets all the screens
   gameState.push(
     new StateMachine({
+      final: () => new GameFinalState(),
       play: () => new GamePlayState(),
       title: () => new GameTitleState()
     })
   )
   // $FlowFixMe[prop-missing]
-  gameState.stack[0]?.change('title')
+  gameState.stack[0]?.change('play')
 }
 
 function updateGame (delta: number) {

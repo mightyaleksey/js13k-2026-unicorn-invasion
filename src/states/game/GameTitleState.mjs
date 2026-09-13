@@ -39,7 +39,7 @@ const lines = [
   [
     'Yet victory was never enough.',
     'The Rainbow was torn from the heavens and shattered into seven Crystals of Color.',
-    'The seven lords of Hell claimed the shards.And the world of men faded to gray.',
+    'The seven lords of Hell claimed the shards. And the world of men faded to gray.',
     'When every banner had burned and every prayer gone unanswered, the last of men called upon the one creature that yet might restore what was stolen.',
     'The Unicorn.'
   ],

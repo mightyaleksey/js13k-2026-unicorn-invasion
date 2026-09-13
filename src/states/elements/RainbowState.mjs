@@ -15,25 +15,30 @@ const monochrome = [
   '#494949'
 ]
 
-export type RainbowProps = Readonly<[level?: number]>
+export type RainbowProps = Readonly<[level?: number, small: boolean]>
 
 export class RainbowState extends BaseState {
-  x: number
-  y: number
-
   level: number
+  isSmall: boolean
+
   opacity: number
   radius: number
+  x: number
+  y: number
 
   constructor (props: RainbowProps) {
     super()
 
     this.level = props[0] ?? 0
+    this.isSmall = Boolean(props[1])
+
     this.opacity = 1
     this.radius = this.genRadius()
-
     this.x = 0.5 * Dimentions.width
-    this.y = Math.max(0.35 * Dimentions.height, this.radius + TILE_SIZE)
+    this.y = Math.max(
+      (this.isSmall ? 0.2 : 0.35) * Dimentions.height,
+      this.radius + TILE_SIZE
+    )
   }
 
   render () {
@@ -69,7 +74,7 @@ export class RainbowState extends BaseState {
     return Math.min(
       Dimentions.width - 4 * TILE_SIZE,
       0.5 * Dimentions.height - 3 * TILE_SIZE,
-      86
+      this.isSmall ? 43 : 86
     )
   }
 }
