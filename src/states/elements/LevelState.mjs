@@ -14,6 +14,7 @@ import type { CameraState } from '../elements/CameraState.mjs'
 import { BossState } from '../entities/BossState.mjs'
 import { BuildingState } from '../entities/BuildingState.mjs'
 import { MinionState } from '../entities/MinionState.mjs'
+import { WallState } from '../entities/WallState.mjs'
 import type { EntitiesState } from './EntitiesState.mjs'
 import { TransitionState } from './TransitionState.mjs'
 
@@ -47,14 +48,22 @@ export class LevelState extends TransitionState {
   }
 
   enter () {
+    // ObstacleState
     const sample = [0, 1]
     sample.forEach((pointer) => {
       sample.forEach((multiplier) => {
         const building = new BuildingState([this.camera, pointer, this.level])
         building.y +=
           (FREE_AREA * TILE_SIZE + building.height) * (multiplier + 1)
+
         this.entities.append(building)
       })
+
+      const wall = new WallState([this.camera, pointer])
+      // todo: use building height
+      wall.y += FREE_AREA * TILE_SIZE + 9 * TILE_SIZE
+
+      this.entities.append(wall)
     })
   }
 
@@ -113,7 +122,9 @@ export class LevelState extends TransitionState {
   onInterval (pointer: number) {
     if (pointer === 0 || pointer === 1) {
       const building = new BuildingState([this.camera, pointer, this.level])
+      const wall = new WallState([this.camera, pointer])
       this.entities.append(building)
+      this.entities.append(wall)
       this.intervals[pointer] = FREE_AREA * TILE_SIZE + building.height
 
       return

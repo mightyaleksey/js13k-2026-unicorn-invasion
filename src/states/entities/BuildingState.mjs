@@ -34,9 +34,7 @@ export class BuildingState extends ObstacleState {
 
   constructor (props: BuildingProps) {
     super([
-      props[1] === 0
-        ? -0.5 * (PLAY_AREA * TILE_SIZE + buildingWidth)
-        : 0.5 * (PLAY_AREA * TILE_SIZE + buildingWidth),
+      (props[1] === 0 ? -0.5 : 0.5) * (PLAY_AREA * TILE_SIZE + buildingWidth),
       props[0].y - buildingHeight,
       buildingWidth,
       buildingHeight
