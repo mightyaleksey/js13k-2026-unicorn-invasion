@@ -6,8 +6,7 @@ import {
   PLAY_AREA,
   TILE_SIZE
 } from '../../constants.mjs'
-import { Dimentions, pattern } from '../../engine.mjs'
-import { gameTiles } from '../../gameTiles.mjs'
+import { Dimentions } from '../../engine.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
 import { random, shuffle } from '../../libs/random.mjs'
 import { range } from '../../libs/range.mjs'
@@ -57,16 +56,6 @@ export class LevelState extends TransitionState {
         this.entities.append(building)
       })
     })
-  }
-
-  render () {
-    pattern(
-      gameTiles[0],
-      -0.5 * (PLAY_AREA * TILE_SIZE + Dimentions.width),
-      this.camera.y,
-      Dimentions.width + PLAY_AREA * TILE_SIZE + 1,
-      Dimentions.height + 1
-    )
   }
 
   update (delta: number) {

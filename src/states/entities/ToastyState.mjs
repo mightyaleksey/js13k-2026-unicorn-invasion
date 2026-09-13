@@ -11,7 +11,7 @@ const h = scale * 2 * TILE_SIZE
 export class ToastyState extends EntityState {
   constructor () {
     super([Dimentions.width + 0.5 * w + 1, Dimentions.height - 0.5 * h, w, h])
-    this.frameID = 10
+    this.frameID = 8
   }
 
   update (delta: number) {

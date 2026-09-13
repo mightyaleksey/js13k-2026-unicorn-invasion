@@ -1,16 +1,9 @@
 /* @flow */
 
 import { FONT_MEDIUM, FONT_SMALL } from '../../constants.mjs'
-import {
-  Dimentions,
-  printf,
-  setColor,
-  setFont,
-  wasResized
-} from '../../engine.mjs'
+import { printf, setFont, wasResized } from '../../engine.mjs'
 import { formatLines } from '../../helpers/text.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
-import { TransitionState } from '../elements/TransitionState.mjs'
 import { ButtonState } from './ButtonState.mjs'
 import { EntityState } from './EntityState.mjs'
 

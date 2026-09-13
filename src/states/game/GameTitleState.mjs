@@ -1,16 +1,8 @@
 /* @flow */
 
-import { FONT_HUGE, FONT_MEDIUM, TILE_SIZE } from '../../constants.mjs'
-import {
-  Dimentions,
-  getTextWidth,
-  printf,
-  setColor,
-  setFont,
-  wasResized
-} from '../../engine.mjs'
+import { TILE_SIZE } from '../../constants.mjs'
+import { Dimentions, setColor, wasResized } from '../../engine.mjs'
 import { changeState } from '../../gameState.mjs'
-import { formatLines } from '../../helpers/text.mjs'
 import { TransitionState } from '../elements/TransitionState.mjs'
 import { BookState } from '../entities/BookState.mjs'
 

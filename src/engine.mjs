@@ -162,19 +162,6 @@ export function line (x0: number, y0: number, x1: number, y1: number) {
   c.stroke()
 }
 
-export function pattern (
-  img: HTMLImageElement,
-  x: number,
-  y: number,
-  w: number,
-  h: number
-) {
-  const c = _state.context
-  const p = c.createPattern(img, 'repeat')
-  c.fillStyle = p
-  c.fillRect(x, y, w, h)
-}
-
 export function printf (
   text: string,
   x: number,

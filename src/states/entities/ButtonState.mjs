@@ -3,7 +3,6 @@
 import { TILE_SIZE } from '../../constants.mjs'
 import { Touch } from '../../engine.mjs'
 import { collides } from '../../libs/collides.mjs'
-import { BaseState } from '../BaseState.mjs'
 import { EntityState } from './EntityState.mjs'
 
 export type ButtonProps = Readonly<
@@ -11,10 +10,6 @@ export type ButtonProps = Readonly<
 >
 
 export class ButtonState extends EntityState {
-  x: number
-  y: number
-  width: number
-  height: number
   cb: () => void
 
   constructor (props: ButtonProps) {

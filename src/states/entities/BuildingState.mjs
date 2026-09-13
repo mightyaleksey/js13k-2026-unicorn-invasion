@@ -144,8 +144,3 @@ export class BuildingState extends ObstacleState {
 function getGloominess (level: number): number {
   return level / 6
 }
-
-function updateGlominess (target: BuildingState, value: number) {
-  target.gloominess = value
-  target.palette = target.genPalette()
-}

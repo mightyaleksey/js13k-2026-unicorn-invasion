@@ -9,71 +9,30 @@ import { GamePlayState } from './states/game/GamePlayState.mjs'
 import { GameTitleState } from './states/game/GameTitleState.mjs'
 import { StateMachine } from './states/StateMachine.mjs'
 
+const t2 = 2 * TILE_SIZE
+const tileMap = [
+  // boss tail (2)
+  [3, 0, t2, TILE_SIZE, 0, 0, t2, t2],
+  // boss body (1)
+  [3, 0, 28, t2, t2, 0, 60, t2],
+  // unicorn (3)
+  [3, 0, 19, t2, 0, t2, 57, 4 * TILE_SIZE],
+  // tiles (2)
+  [3, 0, TILE_SIZE, TILE_SIZE, 60, 0, 76, t2],
+  // toasty (1)
+  [12, 0, 18, 31, 57, 33, 75, 64]
+]
+
 async function initGame () {
+  await initSoundBank()
+
   const asset = await newImage('./texture.png')
+  const atlas = await Promise.all([scaleQuad(asset, 3), scaleQuad(asset, 12)])
 
-  const bgScale = 8
-  const genericScale = 3
-  const toastyScale = 12
-
-  const atlas = await Promise.all([
-    scaleQuad(asset, bgScale),
-    scaleQuad(asset, genericScale),
-    scaleQuad(asset, toastyScale)
-  ])
-
-  // $FlowExpectedError[prop-missing]
-  gameTiles.push(
-    ...genQuads(
-      atlas[0],
-      bgScale * TILE_SIZE,
-      bgScale * TILE_SIZE,
-      0,
-      0,
-      bgScale * 2 * TILE_SIZE,
-      bgScale * 2 * TILE_SIZE
-    ),
-    // unicorn
-    ...genQuads(
-      atlas[1],
-      genericScale * 19,
-      genericScale * 2 * TILE_SIZE,
-      genericScale * 2 * TILE_SIZE,
-      0,
-      genericScale * 89,
-      genericScale * 2 * TILE_SIZE
-    ),
-    // boss tail
-    ...genQuads(
-      atlas[1],
-      genericScale * 2 * TILE_SIZE,
-      genericScale * 16,
-      0,
-      genericScale * 2 * TILE_SIZE,
-      genericScale * 2 * TILE_SIZE,
-      genericScale * 4 * TILE_SIZE
-    ),
-    // boss body
-    ...genQuads(
-      atlas[1],
-      genericScale * 28,
-      genericScale * 2 * TILE_SIZE,
-      genericScale * 2 * TILE_SIZE,
-      genericScale * 2 * TILE_SIZE,
-      genericScale * 60,
-      genericScale * 4 * TILE_SIZE
-    ),
-    // spitz
-    ...genQuads(
-      atlas[2],
-      toastyScale * 18,
-      toastyScale * 2 * TILE_SIZE,
-      toastyScale * 71,
-      toastyScale * 2 * TILE_SIZE,
-      toastyScale * 89,
-      toastyScale * 4 * TILE_SIZE
-    )
-  )
+  tileMap.map(([scale, index, ...props]) => {
+    // $FlowExpectedError[prop-missing]
+    gameTiles.push(...genQuads(atlas[index], ...props.map((p) => p * scale)))
+  })
 
   // reset global game state
   gameState.stack = []
@@ -86,8 +45,6 @@ async function initGame () {
   )
   // $FlowFixMe[prop-missing]
   gameState.stack[0]?.change('title')
-
-  await initSoundBank()
 }
 
 function updateGame (delta: number) {

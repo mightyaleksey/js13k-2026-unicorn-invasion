@@ -2,7 +2,6 @@
 
 import {
   CAMERA_MX,
-  CAMERA_SPEED,
   DEBUG_BB,
   DEBUG_PANEL,
   TILE_SIZE

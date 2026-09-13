@@ -1761,7 +1761,7 @@ export function playSound (name: SoundType) {
 export function playMusic () {
   if (NO_SOUND) return
   if (_music.current == null) {
-    zzfxSV(0.4)
+    zzfxSV(0.1)
     _music.current = zzfxP(..._music.buffer)
     _music.current.loop = true
   }

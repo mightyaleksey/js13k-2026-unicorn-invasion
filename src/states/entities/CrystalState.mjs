@@ -8,6 +8,6 @@ export type CrystalProps = Readonly<[x: number, y: number]>
 export class CrystalState extends ObstacleState {
   constructor (props: CrystalProps) {
     super([props[0], props[1], TILE_SIZE, TILE_SIZE])
-    this.frameID = 2
+    this.frameID = 7
   }
 }

@@ -1,7 +1,7 @@
 /* @flow */
 
 import { FRAMES, TILE_SIZE } from '../../constants.mjs'
-import { Dimentions, draw, setColor } from '../../engine.mjs'
+import { draw, setColor } from '../../engine.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
 import { viewport } from '../../helpers/viewport.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
@@ -44,7 +44,7 @@ export class BossState extends CharacterState<> {
       2 * TILE_SIZE,
       TILE_SIZE
     )
-    draw(gameTiles[9], this.x + 2 * TILE_SIZE, this.y, 28, 2 * TILE_SIZE)
+    draw(gameTiles[2], this.x + 2 * TILE_SIZE, this.y, 28, 2 * TILE_SIZE)
   }
 
   update (delta: number) {

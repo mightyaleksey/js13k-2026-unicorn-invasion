@@ -60,9 +60,9 @@ export type CharType = Readonly<{
 }>
 
 export const FRAMES: Readonly<{ [string]: CharType }> = {
-  boss: { frames: [[8], [7, 8, 7]], frameInterval: 0.3 },
-  minion: { frames: [[1]], frameInterval: 0.2 },
-  player: { frames: [[5], [6, 5, 4, 5]], frameInterval: 0.2 }
+  boss: { frames: [[1], [0, 1, 0]], frameInterval: 0.3 },
+  minion: { frames: [[6]], frameInterval: 0.2 },
+  player: { frames: [[4], [5, 4, 3, 4]], frameInterval: 0.2 }
 }
 
 export const BUILDING_PALETTE: ReadonlyArray<string> = [
