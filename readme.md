@@ -8,6 +8,15 @@ Competition rules:
 
 > This time the theme is Unicorns and Rainbows!
 
+## Design
+
+Unicorn Invasion was inspired by Space Invaders game and features IDLE shooter game (kind of bullet hell).
+
+## Authors
+
+- Alexey Litvinov
+- Pavel Devishev
+
 ## Thanks
 
 - Andrzej Mazur for organizing and running [js13kGames](https://js13kgames.com) competition.
