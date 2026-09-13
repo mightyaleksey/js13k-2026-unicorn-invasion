@@ -84,10 +84,11 @@ export class LevelState extends TransitionState {
 
   genStages (): Array<[interval: number, count: number]> {
     const stages: Array<[interval: number, count: number]> = []
+    const level = progress.level
 
     if (DEBUG_BOSS_ONLY !== true) {
       stages.push([TILE_SIZE, 1])
-      ;[2, 3, 4].forEach((t, minions) => {
+      ;[2, 3, 4 + 0.5 * level].forEach((t, minions) => {
         for (let k = 0; k < t; ++k) {
           stages.push([
             random(5 * TILE_SIZE, 8 * TILE_SIZE),

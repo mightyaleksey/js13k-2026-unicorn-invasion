@@ -167,6 +167,7 @@ export class GamePlayState extends TransitionState {
     }
 
     this.level.levelUp()
+    this.player.hp = this.player.hpMax
     this.camera.isMoving = true
     this.showLevel()
   }

@@ -1754,7 +1754,7 @@ export async function initSoundBank () {
 export function playSound (name: SoundType) {
   if (NO_SOUND) return
   const sound = nullthrows(_soundBank[name])
-  zzfxSV(0.1)
+  zzfxSV(0.3)
   zzfx(...sound)
 }
 

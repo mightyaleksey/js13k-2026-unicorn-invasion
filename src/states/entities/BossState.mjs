@@ -2,6 +2,7 @@
 
 import { FRAMES, TILE_SIZE } from '../../constants.mjs'
 import { draw, setColor } from '../../engine.mjs'
+import { progress } from '../../gameState.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
 import { viewport } from '../../helpers/viewport.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
@@ -23,8 +24,9 @@ export class BossState extends CharacterState<> {
     this.animations = this.genAnimations(FRAMES.boss)
     this.currentAnimation = this.animations[0]
 
-    this.hp = 20
-    this.hpMax = 20
+    const hp = 10 + 2 * progress.level
+    this.hp = hp
+    this.hpMax = hp
 
     this.sequenceIndex = -1
     this.sequence = [

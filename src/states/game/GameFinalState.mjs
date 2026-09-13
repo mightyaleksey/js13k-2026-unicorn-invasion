@@ -1,8 +1,8 @@
 /* @flow */
 
 import { TILE_SIZE } from '../../constants.mjs'
-import { Dimentions, setColor, wasResized } from '../../engine.mjs'
-import { changeState } from '../../gameState.mjs'
+import { Dimentions, printf, setColor, wasResized } from '../../engine.mjs'
+import { changeState, progress } from '../../gameState.mjs'
 import { RainbowState } from '../elements/RainbowState.mjs'
 import { TransitionState } from '../elements/TransitionState.mjs'
 import { BookState } from '../entities/BookState.mjs'
@@ -38,6 +38,15 @@ export class GameFinalState extends TransitionState {
     setColor('#fff')
     this.book.render()
     this.rainbow.render()
+
+    setColor('#fff')
+    printf(
+      `Scores: ${String(progress.scores).padStart(6, '0')}`,
+      0,
+      0.85 * Dimentions.height,
+      Dimentions.width,
+      'center'
+    )
   }
 
   update (delta: number) {

@@ -21,7 +21,7 @@ const tileMap = [
   // tiles (2)
   [3, 0, TILE_SIZE, TILE_SIZE, 60, 0, 76, t2],
   // toasty (1)
-  [12, 0, 18, 31, 57, 33, 75, 64]
+  [12, 1, 18, 31, 57, 33, 75, 64]
 ]
 
 async function initGame () {
@@ -46,7 +46,7 @@ async function initGame () {
     })
   )
   // $FlowFixMe[prop-missing]
-  gameState.stack[0]?.change('play')
+  gameState.stack[0]?.change('title')
 }
 
 function updateGame (delta: number) {

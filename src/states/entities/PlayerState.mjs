@@ -23,7 +23,7 @@ export class PlayerState extends CharacterState<'idle' | 'walk'> {
     this.animations = this.genAnimations(FRAMES.player)
     this.currentAnimation = this.animations[0]
 
-    this.hp = 1
+    this.hp = 3
     this.hpMax = 3
     this.scores = 0
 

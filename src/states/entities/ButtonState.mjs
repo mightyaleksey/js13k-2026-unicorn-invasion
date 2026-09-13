@@ -1,7 +1,7 @@
 /* @flow */
 
 import { TILE_SIZE } from '../../constants.mjs'
-import { Touch } from '../../engine.mjs'
+import { Keys, Touch } from '../../engine.mjs'
 import { collides } from '../../libs/collides.mjs'
 import { EntityState } from './EntityState.mjs'
 
@@ -18,6 +18,11 @@ export class ButtonState extends EntityState {
   }
 
   update (delta: number) {
+    if (Keys.wasPressed('Enter')) {
+      this.cb()
+      return
+    }
+
     if (!Touch.wasTouched()) return
     const coords = Touch.getPosition()
     if (coords == null) return

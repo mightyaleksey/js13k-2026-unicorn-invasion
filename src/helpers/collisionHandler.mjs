@@ -22,6 +22,7 @@ export function collisionHandler (
 ) {
   if (self instanceof CharacterState) {
     if (target instanceof CrystalState) {
+      playSound('pickup')
       progress.scores += 20
       gameState.push(new GameProgressState())
       // display progress, move to next level
@@ -56,6 +57,7 @@ export function collisionHandler (
   }
 
   if (target instanceof ProjectileState) {
+    playSound('hit')
     target.isDestroyed = true
   }
 }
