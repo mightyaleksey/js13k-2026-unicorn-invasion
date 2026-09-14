@@ -9,6 +9,7 @@ import { GameFinalState } from './states/game/GameFinalState.mjs'
 import { GamePlayState } from './states/game/GamePlayState.mjs'
 import { GameTitleState } from './states/game/GameTitleState.mjs'
 import { StateMachine } from './states/StateMachine.mjs'
+import { initWavedash, loadProgress } from './wavedash.mjs'
 
 const t2 = 2 * TILE_SIZE
 const tileMap = [
@@ -25,15 +26,18 @@ const tileMap = [
 ]
 
 async function initGame () {
+  loadProgress(0.0)
   await initSoundBank()
 
   const asset = await newImage('./texture.png')
   const atlas = await Promise.all([scaleQuad(asset, 3), scaleQuad(asset, 12)])
+  loadProgress(0.3)
 
   tileMap.map(([scale, index, ...props]) => {
     // $FlowExpectedError[prop-missing]
     gameTiles.push(...genQuads(atlas[index], ...props.map((p) => p * scale)))
   })
+  loadProgress(0.6)
 
   // reset global game state
   gameState.stack = []
@@ -45,8 +49,11 @@ async function initGame () {
       title: () => new GameTitleState()
     })
   )
+  loadProgress(1.0)
+
   // $FlowFixMe[prop-missing]
   gameState.stack[0]?.change('title')
+  initWavedash()
 }
 
 function updateGame (delta: number) {
