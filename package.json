@@ -1,6 +1,6 @@
 {
-  "name": "js13k-2025",
-  "version": "1.0.0",
+  "name": "unicorn-invasion",
+  "version": "2.0.0",
   "author": "Alexey Litvinov",
   "devDependencies": {
     "@babel/preset-flow": "8.0.1",

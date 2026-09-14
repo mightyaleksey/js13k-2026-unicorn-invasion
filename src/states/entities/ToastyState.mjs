@@ -11,44 +11,52 @@ const scale = 4
 const w = scale * 18
 const h = scale * 2 * TILE_SIZE
 
-const interval = 2
+const interval = 0.2
+const windowSize = 10
 const threshold = 5
 
 export class ToastyState extends EntityState {
-  lastScores: number
-  wTime: number
+  slidingWindow: Array<number>
+  scores: number
+  total: number
+  time: number
+
   isLocked: boolean
 
   constructor () {
     super([Dimentions.width + 0.5 * w + 1, Dimentions.height - 0.5 * h, w, h])
     this.frameID = 8
 
-    this.lastScores = 0
-    this.wTime = 0
+    this.slidingWindow = Array(windowSize).fill(0)
+    this.scores = 0
+    this.total = 0
+    this.time = 0
+
     this.isLocked = false
-    this.t = true
   }
 
   update (delta: number) {
     this.isVisible = true
     super.update(delta)
-    this.wTime += delta
 
     if (wasResized() && !this.isLocked) {
       this.x = Dimentions.width + 1
       this.y = Dimentions.height - h
     }
 
-    if (this.isLocked) return
-    if (this.wTime > interval) {
-      this.wTime -= interval
+    this.time += delta
+    if (this.time >= interval) {
+      this.time -= interval
 
-      const delta = progress.scores - this.lastScores
-      if (delta > threshold) {
+      const delta = progress.scores - this.scores
+      this.scores = progress.scores
+      // $FlowFixMe[unsafe-arithmetic]
+      this.total += delta - this.slidingWindow.shift()
+      this.slidingWindow.push(delta)
+
+      if (this.total > threshold && !this.isLocked) {
         this.show()
       }
-
-      this.lastScores = progress.scores + delta / interval
     }
   }
 
@@ -62,8 +70,6 @@ export class ToastyState extends EntityState {
       this.setTransition(0.2, { x: Dimentions.width + 1 }, inCubic)
       this.setTransitionEnd(() => {
         this.isLocked = false
-        this.lastScores = progress.scores
-        this.wTime = 0
       })
     })
   }
