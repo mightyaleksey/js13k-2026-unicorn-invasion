@@ -3,6 +3,7 @@
 import { TILE_SIZE } from '../../constants.mjs'
 import { Dimentions, printf, setColor, wasResized } from '../../engine.mjs'
 import { changeState, progress } from '../../gameState.mjs'
+import { setAchievement, setScores } from '../../wavedash.mjs'
 import { RainbowState } from '../elements/RainbowState.mjs'
 import { TransitionState } from '../elements/TransitionState.mjs'
 import { BookState } from '../entities/BookState.mjs'
@@ -32,6 +33,9 @@ export class GameFinalState extends TransitionState {
     ])
     this.rainbow = new RainbowState([7, true])
     this.updateProps()
+
+    setAchievement('bring-the-light')
+    setScores(progress.scores)
   }
 
   render () {

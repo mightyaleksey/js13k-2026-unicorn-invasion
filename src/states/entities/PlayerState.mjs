@@ -1,6 +1,6 @@
 /* @flow */
 
-import { FRAMES, TILE_SIZE } from '../../constants.mjs'
+import { FRAMES, O_PLAYER, TILE_SIZE } from '../../constants.mjs'
 import { Dimentions, Touch } from '../../engine.mjs'
 import { gameState } from '../../gameState.mjs'
 import { clamp } from '../../libs/clamp.mjs'
@@ -32,7 +32,7 @@ export class PlayerState extends CharacterState<'idle' | 'walk'> {
       walk: () => new PlayerWalkState(this)
     }).change('idle')
 
-    this.statuses.push(new FrontShootingStatus([0.4, 0, -90]))
+    this.statuses.push(new FrontShootingStatus([0.4, 0, -90, O_PLAYER]))
     this.musicStarted = false
     this.touchEnabled = false
   }

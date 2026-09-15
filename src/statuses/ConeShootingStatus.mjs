@@ -1,6 +1,6 @@
 /* @flow */
 
-import { S_CONE_DURATION, S_CONE_INTERVAL } from '../constants.mjs'
+import { O_BOSS_CONE, S_CONE_DURATION, S_CONE_INTERVAL } from '../constants.mjs'
 import type { BossState } from '../states/entities/BossState.mjs'
 import { BulletState } from '../states/entities/BulletState.mjs'
 import { BaseStatus } from './BaseStatus.mjs'
@@ -20,6 +20,7 @@ export class ConeShootingStatus extends BaseStatus<BossState> {
         target.centerX(),
         target.centerY(),
         angle,
+        O_BOSS_CONE,
         0.6 * Math.max(target.width, target.height)
       ])
 

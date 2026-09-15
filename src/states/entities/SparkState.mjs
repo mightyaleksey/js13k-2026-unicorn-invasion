@@ -11,18 +11,12 @@ import {
   setColor,
   translate
 } from '../../engine.mjs'
+import { progress } from '../../gameState.mjs'
+import { getGloominess } from '../../helpers/gloominess.mjs'
+import { desaturate } from '../../libs/color.mjs'
 import { DelayedDeathStatus } from '../../statuses/DelayedDeathStatus.mjs'
 import { RotationStatus } from '../../statuses/RotationStatus.mjs'
 import { ParticleState } from './archetypes/ParticleState.mjs'
-
-// const palette = [
-//   '#fec89a',
-//   '#f49595',
-//   '#eeceda',
-//   '#f3d17c',
-//   '#d0edef',
-//   '#f1deee'
-// ]
 
 export type SparkProps = Readonly<[x: number, y: number, form: number]>
 
@@ -34,7 +28,7 @@ export class SparkState extends ParticleState {
   constructor (props: SparkProps) {
     super([props[0], props[1], SPARK_SIZE, SPARK_SIZE])
 
-    this.accent = '#d0edef'
+    this.accent = desaturate('#A0B5EF', getGloominess(progress.level))
     this.angle = 0
     this.form = props[2]
 

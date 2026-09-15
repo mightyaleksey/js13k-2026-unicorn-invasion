@@ -3,6 +3,7 @@
 import {
   FRAMES,
   MINION_SPEED,
+  O_MINION,
   TILE_SIZE,
   UNIT_VECTORS
 } from '../../constants.mjs'
@@ -33,7 +34,7 @@ export class MinionState extends CharacterState<> {
 
     this.statuses.push(
       new DirectionStatus(),
-      new FrontShootingStatus([1, 0, 90])
+      new FrontShootingStatus([1, 0, 90, O_MINION])
     )
   }
 

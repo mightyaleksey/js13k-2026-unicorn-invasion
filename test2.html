@@ -1,0 +1,56 @@
+<canvas id="c" width="400" height="250"></canvas>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+function createHatchPattern({
+  spacing = 8,      // расстояние между линиями
+  lineWidth = 1.5,  // толщина линии
+  color = '#333',
+  background = null // фон (null = прозрачный)
+} = {}) {
+  const tile = document.createElement('canvas');
+  tile.width = spacing;
+  tile.height = spacing;
+  const t = tile.getContext('2d');
+
+  if (background) {
+    t.fillStyle = background;
+    t.fillRect(0, 0, spacing, spacing);
+  }
+
+  t.strokeStyle = color;
+  t.lineWidth = lineWidth;
+  t.lineCap = 'square';
+
+  // Основная диагональ + две соседние, чтобы не было дыр на стыках тайла
+  t.beginPath();
+  t.moveTo(-spacing, spacing);
+  t.lineTo(spacing, -spacing);
+
+  t.moveTo(0, spacing);
+  t.lineTo(spacing * 2, -spacing);
+
+  t.moveTo(-spacing, spacing * 2);
+  t.lineTo(spacing, 0);
+  t.stroke();
+
+  return ctx.createPattern(tile, 'repeat');
+}
+
+// Прямоугольник
+const x = 40, y = 30, w = 280, h = 160;
+
+ctx.fillStyle = createHatchPattern({
+  spacing: 10,
+  lineWidth: 2,
+  color: '#1a1a1a',
+  background: '#f4f4f4'
+});
+ctx.fillRect(x, y, w, h);
+
+ctx.strokeStyle = '#000';
+ctx.lineWidth = 2;
+ctx.strokeRect(x, y, w, h);
+</script>

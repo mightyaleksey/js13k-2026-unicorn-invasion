@@ -285,10 +285,10 @@ export async function createEngine (
     } else if (delta >= _minFrameTime) {
       previousFrame = currentFrame
 
-      // update game state
-      update(delta)
       _normalizeCanvas()
       _updateDimentions()
+      // update game state
+      update(delta)
 
       clear()
       // save and restore helps to reset "translate" changes
@@ -316,7 +316,7 @@ export async function createEngine (
   document.addEventListener('pointerdown', onPointer)
   document.addEventListener('pointercancel', onPointerEnd)
   document.addEventListener('pointerup', onPointerEnd)
-  window.addEventListener('resize', onReisze)
+  window.addEventListener('resize', onResize)
 
   function onKeydown (event: KeyboardEvent) {
     _preventDefault(event)
@@ -357,7 +357,7 @@ export async function createEngine (
     document.removeEventListener('pointermove', onPointerMove)
   }
 
-  function onReisze () {
+  function onResize () {
     _input.resized = true
   }
 
@@ -451,6 +451,12 @@ function _getTime (): number {
 }
 
 function _updateDimentions () {
-  Dimentions.width = Math.ceil(window.innerWidth / _scale)
-  Dimentions.height = Math.ceil(window.innerHeight / _scale)
+  const w = Math.ceil(window.innerWidth / _scale)
+  const h = Math.ceil(window.innerHeight / _scale)
+  if (w !== Dimentions.width || h !== Dimentions.height) {
+    _input.resized = true
+  }
+
+  Dimentions.width = w
+  Dimentions.height = h
 }

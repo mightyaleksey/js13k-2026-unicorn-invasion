@@ -44,8 +44,9 @@ export class TransitionState extends BaseState {
         this.tProps = this.genTValues()
         this.setTValues()
       } else if (this.tEnd != null) {
-        this.tEnd()
+        const fn = this.tEnd
         this.tEnd = null
+        fn()
       }
     }
   }

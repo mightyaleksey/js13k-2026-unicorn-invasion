@@ -52,7 +52,7 @@ async function initGame () {
   loadProgress(1.0)
 
   // $FlowFixMe[prop-missing]
-  gameState.stack[0]?.change('title')
+  gameState.stack[0]?.change('play')
   initWavedash()
 }
 

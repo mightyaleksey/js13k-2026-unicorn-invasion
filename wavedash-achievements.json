@@ -1,0 +1,52 @@
+{
+  "achievements": [
+    {
+      "identifier": "first-spark",
+      "display_name": "First Spark",
+      "description": "No need to shoot: aim with your body.",
+      "stat_requirement": null
+    },
+    {
+      "identifier": "crystal-returned",
+      "display_name": "Crystal Returned",
+      "description": "From a fallen lord, a color is reclaimed.",
+      "stat_requirement": null
+    },
+    {
+      "identifier": "bring-the-light",
+      "display_name": "Bring the Light",
+      "description": "The seven colors are whole. The Rainbow is home.",
+      "stat_requirement": null
+    },
+    {
+      "identifier": "through-the-arc",
+      "display_name": "Through the Arc",
+      "description": "Let the lord's curve miss you.",
+      "stat_requirement": null
+    },
+    {
+      "identifier": "pattern-reader",
+      "display_name": "Pattern Reader",
+      "description": "Slay a lord without taking damage.",
+      "stat_requirement": null
+    },
+    {
+      "identifier": "toasty",
+      "display_name": "Toasty!",
+      "description": "Points came too fast. The toast noticed.",
+      "stat_requirement": null
+    },
+    {
+      "identifier": "gloom-town",
+      "display_name": "Gloom Town",
+      "description": "The streets lose another shade of light.",
+      "stat_requirement": null
+    },
+    {
+      "identifier": "horn-guard",
+      "display_name": "Horn Guard",
+      "description": "Your spark met theirs and neither passed.",
+      "stat_requirement": null
+    }
+  ]
+}

@@ -33,7 +33,11 @@ export const S_AREA_INTERVAL: number = 0.4
 export const S_CONE_DURATION: number = 3
 export const S_CONE_INTERVAL: number = 0.5
 
-export const TRANSITION_DURATION = 0.3
+export const O_PLAYER = 1
+export const O_MINION = 2
+export const O_BOSS_ARC = 3
+export const O_BOSS_CONE = 4
+export const O_BOSS_EXPLOSION = 4
 
 // array index reflects corresponding direction, i.e. top, right, bottom, left
 export const MOVEMENT_KEYS: ReadonlyArray<string> = [
@@ -69,6 +73,7 @@ export const FRAMES: Readonly<{ [string]: CharType }> = {
   player: { frames: [[4], [5, 4, 3, 4]], frameInterval: 0.2 }
 }
 
+export const BG_COLOR: string = '#262d38'
 export const BUILDING_PALETTE: ReadonlyArray<string> = [
   '#2a4062',
   '#5a668c',

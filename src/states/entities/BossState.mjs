@@ -9,6 +9,7 @@ import { nullthrows } from '../../libs/nullthrows.mjs'
 import { ArcShootingStatus } from '../../statuses/ArcShootingStatus.mjs'
 import { ConeShootingStatus } from '../../statuses/ConeShootingStatus.mjs'
 import { ExplosionShootingStatus } from '../../statuses/ExplosionShootingStatus.mjs'
+import { setAchievement } from '../../wavedash.mjs'
 import { CharacterState } from './archetypes/CharacterState.mjs'
 import { CrystalState } from './CrystalState.mjs'
 
@@ -56,9 +57,13 @@ export class BossState extends CharacterState<> {
     this.switchAttacks()
 
     const targetY = viewport.y + 0.3 * viewport.height
-    if (targetY < this.y) {
+    if (targetY < this.y && this.camera.isMoving) {
       this.camera.isMoving = false
       this.isCollidable = true
+      // reset hits for achievement tracking
+      progress.arcHit = 0
+      progress.arcSeen = 0
+      progress.hits = 0
     }
   }
 
@@ -78,7 +83,6 @@ export class BossState extends CharacterState<> {
 
   onDeath () {
     super.onDeath()
-
     // todo: add animation
     const crystal = new CrystalState([this.centerX(), this.centerY()])
     this.entities.append(crystal)

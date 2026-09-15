@@ -1,6 +1,7 @@
 /* @flow */
 
 import {
+  BG_COLOR,
   CAMERA_MX,
   DEBUG_BB,
   DEBUG_PANEL,
@@ -11,14 +12,16 @@ import {
 import {
   Dimentions,
   printf,
+  rect,
   setColor,
   setFont,
   translate
 } from '../../engine.mjs'
-import { changeState, gameState, progress } from '../../gameState.mjs'
+import { changeState, progress } from '../../gameState.mjs'
+import { getGloominess } from '../../helpers/gloominess.mjs'
+import { desaturate } from '../../libs/color.mjs'
 import { inCubic, outCubic } from '../../libs/easing.mjs'
 import { Console } from '../../ui/Console.mjs'
-import { BaseState } from '../BaseState.mjs'
 import { CameraState } from '../elements/CameraState.mjs'
 import { EntitiesState } from '../elements/EntitiesState.mjs'
 import { GridState } from '../elements/GridState.mjs'
@@ -56,6 +59,8 @@ export class GamePlayState extends TransitionState {
   eLevelY: number
   eTitleOpacity: number
 
+  bgColor: string
+
   console: Console
   grid: GridState
 
@@ -75,6 +80,8 @@ export class GamePlayState extends TransitionState {
     this.eLevelY = -2 * TILE_SIZE
     this.eTitleOpacity = 0
 
+    this.bgColor = desaturate(BG_COLOR, getGloominess(progress.level))
+
     // $FlowExpectedError[constant-condition]
     if (DEBUG_PANEL) {
       this.console = new Console({ x: 8, y: 16 })
@@ -91,6 +98,9 @@ export class GamePlayState extends TransitionState {
   }
 
   render () {
+    setColor(this.bgColor)
+    rect('fill', 0, 0, Dimentions.width + 1, Dimentions.height + 1)
+
     // emulate camera effect
     translate(-this.camera.x - this.camera.offsetX, -this.camera.y)
     // terrain & enemies
@@ -156,6 +166,9 @@ export class GamePlayState extends TransitionState {
     this.level.update(delta)
     this.entities.update(delta)
     this.toasty.update(delta)
+
+    // turn off toasty during the boss fight
+    this.toasty.isWorking = this.camera.isMoving
   }
 
   /* helpers */
@@ -166,7 +179,9 @@ export class GamePlayState extends TransitionState {
       return
     }
 
+    this.bgColor = desaturate(BG_COLOR, getGloominess(progress.level))
     this.level.levelUp()
+    this.toasty.reset()
     this.player.hp = this.player.hpMax
     this.camera.isMoving = true
     this.showLevel()

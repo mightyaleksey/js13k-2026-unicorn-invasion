@@ -1,12 +1,8 @@
 /* @flow */
 
-import {
-  BUILDING_PALETTE,
-  PLAY_AREA,
-  TILE_SIZE,
-  TRANSITION_DURATION
-} from '../../constants.mjs'
+import { BUILDING_PALETTE, PLAY_AREA, TILE_SIZE } from '../../constants.mjs'
 import { Dimentions, setColor, shape } from '../../engine.mjs'
+import { getGloominess } from '../../helpers/gloominess.mjs'
 import { desaturate } from '../../libs/color.mjs'
 import type { CameraState } from '../elements/CameraState.mjs'
 import { ObstacleState } from './archetypes/ObstacleState.mjs'
@@ -130,15 +126,10 @@ export class BuildingState extends ObstacleState {
   setGloominess (level: number) {
     // level = [0, 6]
     this.isChanging = true
-    this.setTransition(TRANSITION_DURATION, {
-      gloominess: getGloominess(level)
-    })
+    this.setTransition(0.1, {})
+    this.setTransition(0.3, { gloominess: getGloominess(level) })
     this.setTransitionEnd(() => {
       this.isChanging = false
     })
   }
-}
-
-function getGloominess (level: number): number {
-  return level / 6
 }

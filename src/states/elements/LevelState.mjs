@@ -11,6 +11,7 @@ import { progress } from '../../gameState.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
 import { random, shuffle } from '../../libs/random.mjs'
 import { range } from '../../libs/range.mjs'
+import { setAchievement } from '../../wavedash.mjs'
 import type { CameraState } from '../elements/CameraState.mjs'
 import { BossState } from '../entities/BossState.mjs'
 import { BuildingState } from '../entities/BuildingState.mjs'
@@ -71,6 +72,7 @@ export class LevelState extends TransitionState {
   }
 
   update (delta: number) {
+    super.update(delta)
     this.currentYs.forEach((currentY, i) => {
       if (currentY - this.camera.y >= this.intervals[i]) {
         // $FlowFixMe[invalid-tuple-index]
@@ -121,6 +123,13 @@ export class LevelState extends TransitionState {
     })
 
     this.stages = this.genStages()
+
+    if (progress.level === 5) {
+      this.setTransition(0.4, {})
+      this.setTransitionEnd(() => {
+        setAchievement('gloom-town')
+      })
+    }
   }
 
   onInterval (pointer: number) {

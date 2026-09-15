@@ -12,6 +12,11 @@ Competition rules:
 
 Unicorn Invasion was inspired by Space Invaders game and features IDLE shooter game (kind of bullet hell).
 
+> Descend into Hell.
+> Slay the seven who rule there.
+> Wrest back the seven Crystals of Color.
+> And see the Rainbow home.
+
 ## Authors
 
 - Alexey Litvinov

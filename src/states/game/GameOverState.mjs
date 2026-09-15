@@ -2,8 +2,9 @@
 
 import { FONT_HUGE } from '../../constants.mjs'
 import { Dimentions, printf, rect, setColor, setFont } from '../../engine.mjs'
-import { gameState, restart } from '../../gameState.mjs'
+import { gameState, progress, restart } from '../../gameState.mjs'
 import { wasAction } from '../../helpers/controls.mjs'
+import { setScores } from '../../wavedash.mjs'
 import { TransitionState } from '../elements/TransitionState.mjs'
 
 export class GameOverState extends TransitionState {
@@ -20,6 +21,8 @@ export class GameOverState extends TransitionState {
     this.setTransitionEnd(() => {
       this.isLocked = false
     })
+
+    setScores(progress.scores)
   }
 
   render () {

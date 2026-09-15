@@ -18,7 +18,7 @@ export class ButtonState extends EntityState {
   }
 
   update (delta: number) {
-    if (Keys.wasPressed('Enter')) {
+    if (Keys.wasPressed(' ') || Keys.wasPressed('Enter')) {
       this.cb()
       return
     }

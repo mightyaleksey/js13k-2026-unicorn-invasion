@@ -1,11 +1,15 @@
 /* @flow */
 
+import { progress } from '../../gameState.mjs'
 import { collisionHandler } from '../../helpers/collisionHandler.mjs'
 import { sortEntities } from '../../helpers/entities.mjs'
 import { playarea } from '../../helpers/viewport.mjs'
 import { collides } from '../../libs/collides.mjs'
+import { setAchievement } from '../../wavedash.mjs'
 import { BaseState } from '../BaseState.mjs'
 import type { CameraState } from '../elements/CameraState.mjs'
+import { ProjectileState } from '../entities/archetypes/ProjectileState.mjs'
+import { BossState } from '../entities/BossState.mjs'
 import type { EntityState } from '../entities/EntityState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
 
@@ -14,12 +18,14 @@ export type EntitiesProps = Readonly<[camera: CameraState]>
 export class EntitiesState extends BaseState {
   camera: CameraState
   list: Array<EntityState<>>
+  shouldCheck: boolean
   shouldSort: boolean
 
   constructor (props: EntitiesProps) {
     super()
     this.camera = props[0]
     this.list = []
+    this.shouldCheck = false
     this.shouldSort = false
   }
 
@@ -53,8 +59,28 @@ export class EntitiesState extends BaseState {
       const entity = this.list[j]
       if (entity instanceof PlayerState) continue
 
+      if (entity instanceof BossState || entity.isDestroyed) {
+        this.shouldCheck = true
+      }
+
       if (!collides(entity, playarea) || entity.isDestroyed) {
         this.list.splice(j, 1)
+      }
+    }
+
+    if (this.shouldCheck) {
+      const projectile = entities.find(
+        (entity) => entity instanceof ProjectileState
+      )
+
+      if (projectile == null) {
+        if (progress.arcSeen && progress.arcHit === 0) {
+          setAchievement('through-the-arc')
+        }
+
+        if (progress.hits === 0) {
+          setAchievement('pattern-reader')
+        }
       }
     }
 
@@ -73,6 +99,10 @@ export class EntitiesState extends BaseState {
     // $FlowExpectedError[cannot-write]
     entity.onCollide = collisionHandler
     this.list.push(entity)
+
+    if (entity instanceof BossState) {
+      this.shouldCheck = false
+    }
 
     this.shouldSort = true
   }

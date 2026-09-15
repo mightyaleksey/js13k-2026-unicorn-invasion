@@ -1,6 +1,6 @@
 /* @flow */
 
-import { FONT_SMALL, TILE_SIZE } from '../../constants.mjs'
+import { BG_COLOR, FONT_SMALL, TILE_SIZE } from '../../constants.mjs'
 import { Dimentions, printf, rect, setColor, setFont } from '../../engine.mjs'
 import { progress } from '../../gameState.mjs'
 import { BaseState } from '../BaseState.mjs'
@@ -19,9 +19,12 @@ export class InterfaceState extends BaseState {
   render () {
     const { hp, hpMax } = this.player
     const barSize = 0.1 * Dimentions.width
+    const w = barSize + 4 * TILE_SIZE
+    const h = 2 * TILE_SIZE
 
-    setColor('#262d38')
-    rect('fill', -1, -1, Dimentions.width + 2, TILE_SIZE)
+    setColor(BG_COLOR)
+    rect('fill', -TILE_SIZE, -TILE_SIZE, w, h, h)
+    rect('fill', Dimentions.width - w + TILE_SIZE, -TILE_SIZE, w, h, h)
 
     const barX = TILE_SIZE
     const barY = 6

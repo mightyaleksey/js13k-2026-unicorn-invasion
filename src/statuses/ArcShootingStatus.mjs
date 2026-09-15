@@ -1,6 +1,7 @@
 /* @flow */
 
-import { S_ARC_DURATION, S_ARC_INTERVAL } from '../constants.mjs'
+import { O_BOSS_ARC, S_ARC_DURATION, S_ARC_INTERVAL } from '../constants.mjs'
+import { progress } from '../gameState.mjs'
 import type { BossState } from '../states/entities/BossState.mjs'
 import { BulletState } from '../states/entities/BulletState.mjs'
 import { BaseStatus } from './BaseStatus.mjs'
@@ -19,12 +20,15 @@ export class ArcShootingStatus extends BaseStatus<BossState> {
   }
 
   onTick (target: BossState) {
+    progress.arcSeen = 1
+
     const interval = step * count
     for (let angle = this.angle; angle > this.angle - interval; angle -= step) {
       const projectile = new BulletState([
         target.centerX(),
         target.centerY(),
         angle,
+        O_BOSS_ARC,
         Math.max(target.width, target.height)
       ])
 
