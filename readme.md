@@ -17,6 +17,11 @@ Unicorn Invasion was inspired by Space Invaders game and features IDLE shooter g
 > Wrest back the seven Crystals of Color.
 > And see the Rainbow home.
 
+## Controls
+
+- Keyboard: use either arrows or WASD for movement. And space or enter to skip text.
+- Mouse or Touch: click or tap the screen in the direction you want the Unicorn to move.
+
 ## Authors
 
 - Alexey Litvinov
