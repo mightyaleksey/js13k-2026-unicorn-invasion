@@ -1,5 +1,6 @@
 /* @flow */
 
+import { O_PLAYER } from '../../constants.mjs'
 import { progress } from '../../gameState.mjs'
 import { collisionHandler } from '../../helpers/collisionHandler.mjs'
 import { sortEntities } from '../../helpers/entities.mjs'
@@ -70,10 +71,11 @@ export class EntitiesState extends BaseState {
 
     if (this.shouldCheck) {
       const projectile = entities.find(
-        (entity) => entity instanceof ProjectileState
+        (entity) =>
+          entity instanceof ProjectileState && entity.origin !== O_PLAYER
       )
 
-      if (projectile == null) {
+      if (projectile == null && progress.bossSeen === 1) {
         if (progress.arcSeen && progress.arcHit === 0) {
           setAchievement('through-the-arc')
         }

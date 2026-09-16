@@ -21,6 +21,7 @@ export class ArcShootingStatus extends BaseStatus<BossState> {
 
   onTick (target: BossState) {
     progress.arcSeen = 1
+    progress.bossSeen = 1
 
     const interval = step * count
     for (let angle = this.angle; angle > this.angle - interval; angle -= step) {

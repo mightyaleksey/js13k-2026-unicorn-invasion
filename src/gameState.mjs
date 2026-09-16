@@ -14,7 +14,14 @@ import { StateStack } from './states/StateStack.mjs'
  */
 export const gameState: StateStack = new StateStack()
 
-export const progress = { arcHit: 0, arcSeen: 0, hits: 0, level: 0, scores: 0 }
+export const progress = {
+  arcHit: 0,
+  arcSeen: 0,
+  bossSeen: 0,
+  hits: 0,
+  level: 0,
+  scores: 0
+}
 
 /**
  * Helpers

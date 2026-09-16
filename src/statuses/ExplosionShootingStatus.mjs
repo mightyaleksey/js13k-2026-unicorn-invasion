@@ -7,6 +7,7 @@ import {
   TILE_SIZE
 } from '../constants.mjs'
 import { Dimentions } from '../engine.mjs'
+import { progress } from '../gameState.mjs'
 import { viewport } from '../helpers/viewport.mjs'
 import { nullthrows } from '../libs/nullthrows.mjs'
 import { shuffle } from '../libs/random.mjs'
@@ -40,6 +41,8 @@ export class ExplosionShootingStatus extends BaseStatus<BossState> {
   }
 
   onTick (target: BossState) {
+    progress.bossSeen = 1
+
     for (let j = 0; j < this.displayCount; ++j) {
       this.genEntity(target)
       this.seqIndex++
