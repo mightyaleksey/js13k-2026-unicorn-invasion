@@ -8,6 +8,11 @@ Competition rules:
 
 > This time the theme is Unicorns and Rainbows!
 
+Game builds:
+- Contest version: https://js13kgames.com/2026/games/unicorn-invasion
+- Wavedash version: https://wavedash.com/games/unicorn-invasion
+- Developer version: https://mightyaleksey.github.io/js13k-2026-unicorn-invasion/
+
 ## Design
 
 Unicorn Invasion was inspired by Space Invaders game and features IDLE shooter game (kind of bullet hell).
