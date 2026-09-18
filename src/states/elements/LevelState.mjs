@@ -127,7 +127,7 @@ export class LevelState extends TransitionState {
     if (progress.level === 5) {
       this.setTransition(0.4, {})
       this.setTransitionEnd(() => {
-        setAchievement('gloom-town')
+        setAchievement(3)
       })
     }
   }

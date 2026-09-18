@@ -34,7 +34,7 @@ export class GameFinalState extends TransitionState {
     this.rainbow = new RainbowState([7, true])
     this.updateProps()
 
-    setAchievement('bring-the-light')
+    setAchievement(0)
     setScores(progress.scores)
   }
 

@@ -93,7 +93,7 @@ export class ToastyState extends EntityState {
       this.setTransition(0.2, { x: Dimentions.width + 1 }, inCubic)
       this.setTransition(0.5, { x: Dimentions.width + 1 }, inCubic)
       this.setTransitionEnd(() => {
-        setAchievement('toasty')
+        setAchievement(7)
         this.reset()
         this.isLocked = false
       })

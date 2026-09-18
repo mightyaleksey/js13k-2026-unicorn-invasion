@@ -29,7 +29,7 @@ export function collisionHandler (
       progress.scores += 20
 
       if (progress.level === 0) {
-        setAchievement('crystal-returned')
+        setAchievement(1)
       }
 
       gameState.push(new GameProgressState())
@@ -51,7 +51,7 @@ export function collisionHandler (
         if (self instanceof MinionState) {
           if (target.origin === O_PLAYER) {
             // todo: check movement
-            setAchievement('first-spark')
+            setAchievement(2)
           }
 
           progress.scores += 3
@@ -85,7 +85,7 @@ export function collisionHandler (
         (self.origin === O_PLAYER && target.origin !== O_PLAYER) ||
         (self.origin !== O_PLAYER && target.origin === O_PLAYER)
       ) {
-        setAchievement('horn-guard')
+        setAchievement(4)
       }
     }
 

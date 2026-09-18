@@ -18,6 +18,17 @@ type WavedashConfig = {
   remoteStorageOrigin?: string
 }
 
+const achievements: ReadonlyArray<AchievementIDs> = [
+  'bring-the-light', // 0
+  'crystal-returned',
+  'first-spark', // 2
+  'gloom-town',
+  'horn-guard', // 4
+  'pattern-reader',
+  'through-the-arc', // 6
+  'toasty'
+]
+const achievementFlags = [0, 0, 0, 0, 0, 0, 0, 0]
 const leaderboardName = 'high_scores'
 let leaderboardID: ?number = null
 
@@ -32,12 +43,12 @@ export function initWavedash (config?: WavedashConfig) {
   window.Wavedash.init(config)
 }
 
-export function setAchievement (
-  achievementID: AchievementIDs,
-  storeNow?: boolean
-) {
+export function setAchievement (achievementID: number, storeNow?: boolean) {
+  if (achievementFlags[achievementID] === 1) return
+  achievementFlags[achievementID] = 1
+
   if (window.Wavedash == null) return
-  window.Wavedash.setAchievement(achievementID, storeNow)
+  window.Wavedash.setAchievement(achievements[achievementID], storeNow)
 }
 
 export async function setScores (scores: number) {
@@ -49,6 +60,6 @@ export async function setScores (scores: number) {
   }
 
   if (leaderboardID != null) {
-    await window.Wavedash.uploadLeaderboardScore(window.Wavedash, scores, true)
+    await window.Wavedash.uploadLeaderboardScore(leaderboardID, scores, true)
   }
 }

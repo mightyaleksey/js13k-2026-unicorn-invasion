@@ -77,12 +77,14 @@ export class EntitiesState extends BaseState {
 
       if (projectile == null && progress.bossSeen === 1) {
         if (progress.arcSeen && progress.arcHit === 0) {
-          setAchievement('through-the-arc')
+          setAchievement(6)
         }
 
         if (progress.hits === 0) {
-          setAchievement('pattern-reader')
+          setAchievement(5)
         }
+
+        this.shouldCheck = false
       }
     }
 

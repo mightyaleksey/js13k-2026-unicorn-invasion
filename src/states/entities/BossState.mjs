@@ -63,6 +63,7 @@ export class BossState extends CharacterState<> {
       // reset hits for achievement tracking
       progress.arcHit = 0
       progress.arcSeen = 0
+      progress.bossSeen = 0
       progress.hits = 0
     }
   }
