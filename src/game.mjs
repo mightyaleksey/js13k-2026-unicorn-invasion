@@ -1,9 +1,16 @@
 /* @flow */
 
 import { TILE_SIZE } from './constants.mjs'
-import { createEngine, genQuads, newImage, scaleQuad } from './engine.mjs'
+import {
+  createEngine,
+  createPattern,
+  genQuads,
+  newImage,
+  scaleQuad
+} from './engine.mjs'
 import { gameState } from './gameState.mjs'
-import { gameTiles } from './gameTiles.mjs'
+import { gamePatterns, gameTiles } from './gameTiles.mjs'
+import { random } from './libs/random.mjs'
 import { initSoundBank } from './sound.mjs'
 import { GameFinalState } from './states/game/GameFinalState.mjs'
 import { GamePlayState } from './states/game/GamePlayState.mjs'
@@ -34,10 +41,39 @@ async function initGame () {
   loadProgress(0.3)
 
   tileMap.map(([scale, index, ...props]) => {
-    // $FlowExpectedError[prop-missing]
     gameTiles.push(...genQuads(atlas[index], ...props.map((p) => p * scale)))
   })
   loadProgress(0.6)
+
+  gamePatterns.push(
+    createPattern(
+      (c) => {
+        c.fillStyle = '#28303C'
+        for (let i = 0; i < 40; ++i) {
+          c.rect(random(36), random(36), 4, 4)
+        }
+        c.fill()
+      },
+      40,
+      40
+    )
+  )
+  gamePatterns.push(
+    createPattern(
+      (c) => {
+        c.strokeStyle = '#f49595'
+        c.lineWidth = 0.5
+        for (let i = 0; i <= 2 * TILE_SIZE + 2; i += 8) {
+          c.moveTo(-1, i)
+          c.lineTo(i, -1)
+          c.stroke()
+        }
+      },
+      TILE_SIZE,
+      TILE_SIZE
+    )
+  )
+  loadProgress(0.8)
 
   // reset global game state
   gameState.stack = []

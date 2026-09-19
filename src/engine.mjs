@@ -106,6 +106,28 @@ export function circle (mode: DrawMode, x: number, y: number, radius: number) {
   mode === 'fill' ? c.fill() : c.stroke()
 }
 
+export function createPattern (
+  fn: (CanvasRenderingContext2D, number, number) => void,
+  width: number,
+  height: number
+): CanvasPattern {
+  const [elem, ctx] = createCanvas(width, height)
+  fn(ctx, width, height)
+  return _state.context.createPattern(elem, 'repeat')
+}
+
+export function drawPattern (
+  pattern: CanvasPattern,
+  x: number,
+  y: number,
+  width: number,
+  height: number
+) {
+  const c = _state.context
+  c.fillStyle = pattern
+  c.fillRect(x, y, width, height)
+}
+
 export function draw (
   drawable: HTMLImageElement,
   x: number,
@@ -264,15 +286,16 @@ export async function createEngine (
   renderGame?: ?() => void
 ) {
   _updateDimentions()
+
+  const c = createCanvas()
+  _state.buffer = c[0]
+  _state.context = c[1]
+
   if (initGame != null) await initGame()
 
   // normalize input
   const render = renderGame ?? emptyFunction
   const update: (number) => void = updateGame ?? emptyFunction
-
-  const c = createCanvas()
-  _state.buffer = c[0]
-  _state.context = c[1]
 
   document.body?.appendChild(_state.buffer)
   ;(function gameLoop (previousFrame: number) {

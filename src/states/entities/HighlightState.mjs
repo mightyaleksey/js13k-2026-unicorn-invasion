@@ -1,7 +1,8 @@
 /* @flow */
 
 import { EXPLOSION_SIZE, HIGHLIGHT_DURATION } from '../../constants.mjs'
-import { rect, setColor } from '../../engine.mjs'
+import { drawPattern, rect, setColor } from '../../engine.mjs'
+import { gamePatterns } from '../../gameTiles.mjs'
 import { DelayedDeathStatus } from '../../statuses/DelayedDeathStatus.mjs'
 import { ParticleState } from './archetypes/ParticleState.mjs'
 
@@ -17,6 +18,7 @@ export class HighlightState extends ParticleState {
     super.render()
 
     setColor('#f49595')
-    rect('fill', this.x, this.y, this.width, this.height)
+    drawPattern(gamePatterns[1], this.x, this.y, this.width, this.height)
+    rect('line', this.x, this.y, this.width, this.height)
   }
 }

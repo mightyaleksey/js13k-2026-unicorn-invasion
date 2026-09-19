@@ -1,3 +1,4 @@
 /* @flow */
 
-export const gameTiles: ReadonlyArray<HTMLImageElement> = []
+export const gameTiles: Array<HTMLImageElement> = []
+export const gamePatterns: Array<CanvasPattern> = []

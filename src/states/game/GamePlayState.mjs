@@ -6,11 +6,13 @@ import {
   DEBUG_BB,
   DEBUG_PANEL,
   FONT_HUGE,
+  PLAY_AREA,
   RAINBOW_PALETTE,
   TILE_SIZE
 } from '../../constants.mjs'
 import {
   Dimentions,
+  drawPattern,
   printf,
   rect,
   setColor,
@@ -18,6 +20,7 @@ import {
   translate
 } from '../../engine.mjs'
 import { changeState, progress } from '../../gameState.mjs'
+import { gamePatterns } from '../../gameTiles.mjs'
 import { getGloominess } from '../../helpers/gloominess.mjs'
 import { desaturate } from '../../libs/color.mjs'
 import { inCubic, outCubic } from '../../libs/easing.mjs'
@@ -104,6 +107,13 @@ export class GamePlayState extends TransitionState {
     // emulate camera effect
     translate(-this.camera.x - this.camera.offsetX, -this.camera.y)
     // terrain & enemies
+    drawPattern(
+      gamePatterns[0],
+      -0.5 * (Dimentions.width + PLAY_AREA * TILE_SIZE),
+      this.camera.y,
+      Dimentions.width + PLAY_AREA * TILE_SIZE + 1,
+      Dimentions.height + 1
+    )
     this.level.render()
     this.entities.render()
     // restore camera
