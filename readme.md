@@ -32,6 +32,10 @@ Unicorn Invasion was inspired by Space Invaders game and features IDLE shooter g
 - Alexey Litvinov
 - Pavel Devishev
 
+## Resources
+
+- Music was copied and rendered by https://keithclark.github.io/ZzFXM/.
+
 ## Thanks
 
 - Andrzej Mazur for organizing and running [js13kGames](https://js13kgames.com) competition.
